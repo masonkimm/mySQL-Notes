@@ -235,7 +235,7 @@ DROP INDEX LIndex ON users;
 
 ```sql
 CREATE TABLE posts(
-id INT AUTO_INCREMENT,
+   id INT AUTO_INCREMENT,
    user_id INT,
    title VARCHAR(100),
    body TEXT,
