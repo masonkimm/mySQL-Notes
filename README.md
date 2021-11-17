@@ -3,9 +3,10 @@
 > Help with SQL commands to interact with a MySQL database
 
 ## MySQL Locations
-* Mac             */usr/local/mysql/bin*
-* Windows         */Program Files/MySQL/MySQL _version_/bin*
-* Xampp           */xampp/mysql/bin*
+
+- Mac _/usr/local/mysql/bin_
+- Windows _/Program Files/MySQL/MySQL *version*/bin_
+- Xampp _/xampp/mysql/bin_
 
 ## Add mysql to your PATH
 
@@ -97,16 +98,16 @@ USE acme;
 
 ```sql
 CREATE TABLE users(
-id INT AUTO_INCREMENT,
-   first_name VARCHAR(100),
-   last_name VARCHAR(100),
-   email VARCHAR(50),
-   password VARCHAR(20),
-   location VARCHAR(100),
-   dept VARCHAR(100),
-   is_admin TINYINT(1),
-   register_date DATETIME,
-   PRIMARY KEY(id)
+    id INT AUTO_INCREMENT,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    email VARCHAR(50),
+    password VARCHAR(20),
+    location VARCHAR(100),
+    dept VARCHAR(100),
+    is_admin TINYINT(1),
+    register_date DATETIME,
+    PRIMARY KEY(id)
 );
 ```
 
@@ -338,82 +339,83 @@ SELECT age, COUNT(age) FROM users GROUP BY age HAVING count(age) >=2;
 2. Use `mysqldump` to backup your databases
 3. Check for MySQL processes with: `ps -ax | grep mysql`
 4. Stop and kill any MySQL processes
-5. Analyze MySQL on HomeBrew: 
-        
-    ```
-    brew remove mysql
-    brew cleanup
-    ```
+5. Analyze MySQL on HomeBrew:
 
-6. Remove files: 
+   ```
+   brew remove mysql
+   brew cleanup
+   ```
 
-    ```
-    sudo rm /usr/local/mysql
-    sudo rm -rf /usr/local/var/mysql
-    sudo rm -rf /usr/local/mysql*
-    sudo rm ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
-    sudo rm -rf /Library/StartupItems/MySQLCOM
-    sudo rm -rf /Library/PreferencePanes/My*
-    ```
+6. Remove files:
 
-7. Unload previous MySQL Auto-Login: 
-        
-    ```
-    launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
-    ```
-        
-8. Remove previous MySQL Configuration: 
+   ```
+   sudo rm /usr/local/mysql
+   sudo rm -rf /usr/local/var/mysql
+   sudo rm -rf /usr/local/mysql*
+   sudo rm ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+   sudo rm -rf /Library/StartupItems/MySQLCOM
+   sudo rm -rf /Library/PreferencePanes/My*
+   ```
 
-    ```
-    subl /etc/hostconfig` 
-    # Remove the line MYSQLCOM=-YES-
-    ```
-        
-9. Remove previous MySQL Preferences: 
-    
-    ```
-    rm -rf ~/Library/PreferencePanes/My*
-    sudo rm -rf /Library/Receipts/mysql*
-    sudo rm -rf /Library/Receipts/MySQL*
-    sudo rm -rf /private/var/db/receipts/*mysql*
-    ```
-    
+7. Unload previous MySQL Auto-Login:
+   ```
+   launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+   ```
+8. Remove previous MySQL Configuration:
+
+   ```
+   subl /etc/hostconfig`
+   # Remove the line MYSQLCOM=-YES-
+   ```
+
+9. Remove previous MySQL Preferences:
+
+   ```
+   rm -rf ~/Library/PreferencePanes/My*
+   sudo rm -rf /Library/Receipts/mysql*
+   sudo rm -rf /Library/Receipts/MySQL*
+   sudo rm -rf /private/var/db/receipts/*mysql*
+   ```
+
 10. Restart your computer just to ensure any MySQL processes are killed
 11. Try to run mysql, **it shouldn't work**
 12. IF needed, remove mySQL workbench and all of its files.
-`By default, the Workbench configuration directory is ~username/Library/Application Support/MySQL/Workbench where "~username" is the path to your user's home directory.`
-
+    `By default, the Workbench configuration directory is ~username/Library/Application Support/MySQL/Workbench where "~username" is the path to your user's home directory.`
 
 ```
+
 ```
+
 ## Reset mysql root password in Mac OS:
 
-First Stop MySQL:
-------
+## First Stop MySQL:
+
 1. Go to: 'System Preferences' >> 'MySQL' and stop MySQL
 
 OR,
 
-1) sudo /usr/local/mysql/support-files/mysql.server start
-2) sudo /usr/local/mysql/support-files/mysql.server stop
-3) sudo /usr/local/mysql/support-files/mysql.server status
+1. sudo /usr/local/mysql/support-files/mysql.server start
+2. sudo /usr/local/mysql/support-files/mysql.server stop
+3. sudo /usr/local/mysql/support-files/mysql.server status
 
-Process to Reset MySQL Root Pass in Mac:
-----------------------
+## Process to Reset MySQL Root Pass in Mac:
+
 1. Make sure you have Stopped MySQL first (above).
 2. Run the server in safe mode with privilege bypass: `sudo mysqld_safe --skip-grant-tables`
 3. In a new window connect to the database, set a new password and flush the permissions & quit: `mysql -u root`
-4. **For MySQL older than MySQL 5.7 use**: 
+4. **For MySQL older than MySQL 5.7 use**:
+
    ```sql
    UPDATE mysql.user SET Password=PASSWORD('rootpass') WHERE User='root';
-   ``` 
+   ```
 
-   **For MySQL 5.7+ use:** 
-   ```sql 
+   **For MySQL 5.7+ use:**
+
+   ```sql
    UPDATE mysql.user SET authentication_string=PASSWORD("rootpass") WHERE User='root';
-   ```	
-   
-5. Now flush privileges: 
+   ```
+
+5. Now flush privileges:
    ```sql
    FLUSH PRIVILEGES;
    ```
